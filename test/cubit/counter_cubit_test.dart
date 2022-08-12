@@ -26,5 +26,6 @@ void main() {
       expect: () =>
           <CounterState>[CounterState(counterValue: 1, wasIncremented: true)],
     );
+     
   }));
 }
