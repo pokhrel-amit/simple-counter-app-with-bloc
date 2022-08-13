@@ -1,7 +1,8 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sm_bloc_cubit/cubit/counter_cubit.dart';
-import 'package:sm_bloc_cubit/cubit/counter_state.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/counter_cubit.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/counter_state.dart';
+
 import 'package:test/test.dart';
 
 void main() {
@@ -26,6 +27,5 @@ void main() {
       expect: () =>
           <CounterState>[CounterState(counterValue: 1, wasIncremented: true)],
     );
-     
   }));
 }

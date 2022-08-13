@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sm_bloc_cubit/cubit/counter_cubit.dart';
-import 'package:sm_bloc_cubit/cubit/counter_state.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/counter_cubit.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+import '../../Business_logic/cubit/counter_state.dart';
+
+class ThirdScreen extends StatelessWidget {
+  const ThirdScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Third Page'),
+        ),
+        backgroundColor: Colors.red,
         body: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FloatingActionButton(
+                heroTag: 'h5',
                 onPressed: () {
                   BlocProvider.of<CounterCubit>(context).decrement();
                 },
@@ -29,6 +35,8 @@ class HomeScreen extends StatelessWidget {
                 },
                 listener: (context, state) {
                   if (state.wasIncremented) {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Incremented'),
@@ -36,6 +44,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                     );
                   } else {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Decremented'),
@@ -49,6 +59,7 @@ class HomeScreen extends StatelessWidget {
                 width: 10,
               ),
               FloatingActionButton(
+                heroTag: 'h6',
                 onPressed: () {
                   BlocProvider.of<CounterCubit>(context).increment();
                 },

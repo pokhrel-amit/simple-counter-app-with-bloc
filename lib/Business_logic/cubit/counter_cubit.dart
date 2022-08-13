@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sm_bloc_cubit/cubit/counter_state.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/counter_state.dart';
+
 
 class CounterCubit extends Cubit<CounterState> {
   CounterCubit() : super(CounterState(counterValue: 0));
