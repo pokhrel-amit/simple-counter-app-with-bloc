@@ -15,100 +15,98 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // GlobalKey<ScaffoldState> homeScreenKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BlocBuilder<InternetCubit, InternetState>(
-                builder: (context, state) {
-                  if (state is InternetConnected &&
-                      state.connectionType == ConnectionType.Wifi) {
-                    return Text('Wifi');
-                  } else if (state is InternetConnected &&
-                      state.connectionType == ConnectionType.Mobile) {
-                    return Text('Mobile');
-                  } else if (state is InternetDisconnected) {
-                    return Text('Disconnected');
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // FloatingActionButton(
-                  //   heroTag: 'h1',
-                  //   onPressed: () {
-                  //     BlocProvider.of<CounterCubit>(context).decrement();
-                  //   },
-                  //   child: const Icon(Icons.remove),
-                  // ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  BlocConsumer<CounterCubit, CounterState>(
-                    builder: (context, state) {
-                      return Text(state.counterValue.toString());
-                    },
-                    listener: (context, state) {
-                      if (state.wasIncremented) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Incremented'),
-                            duration: Duration(milliseconds: 300),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Decremented'),
-                            duration: Duration(milliseconds: 300),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  // FloatingActionButton(
-                  //   heroTag: 'h2',
-                  //   onPressed: () {
-                  //     BlocProvider.of<CounterCubit>(context).increment();
-                  //   },
-                  //   child: const Icon(Icons.add),
-                  // ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/second');
-                },
-                child: const Text(
-                  'Second Page',
+    return BlocListener<InternetCubit, InternetState>(
+      listener: (context, state) {
+        if (state is InternetConnected &&
+            state.connectionType == ConnectionType.Wifi) {
+          BlocProvider.of<CounterCubit>(context).increment();
+        } else if (state is InternetConnected &&
+            state.connectionType == ConnectionType.Mobile) {
+          BlocProvider.of<CounterCubit>(context).decrement();
+        } else {
+          CircularProgressIndicator();
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BlocBuilder<InternetCubit, InternetState>(
+                  builder: (context, state) {
+                    if (state is InternetConnected &&
+                        state.connectionType == ConnectionType.Wifi) {
+                      return Text('Wifi');
+                    } else if (state is InternetConnected &&
+                        state.connectionType == ConnectionType.Mobile) {
+                      return Text('Mobile');
+                    } else if (state is InternetDisconnected) {
+                      return Text('Disconnected');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/third');
-                },
-                child: const Text(
-                  'Third Page',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    BlocConsumer<CounterCubit, CounterState>(
+                      builder: (context, state) {
+                        return Text(state.counterValue.toString());
+                      },
+                      listener: (context, state) {
+                        if (state.wasIncremented) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Incremented'),
+                              duration: Duration(milliseconds: 300),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Decremented'),
+                              duration: Duration(milliseconds: 300),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/second');
+                  },
+                  child: const Text(
+                    'Second Page',
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/third');
+                  },
+                  child: const Text(
+                    'Third Page',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
