@@ -1,36 +1,47 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/internet_cubit.dart';
 import 'package:sm_bloc_cubit/presentation_layer/routes/app_routes.dart';
 import 'package:sm_bloc_cubit/presentation_layer/screens/home_screen.dart';
 
 import 'Business_logic/cubit/counter_cubit.dart';
 
 void main(List<String> args) {
-  runApp(MyApp());
+  runApp(MyApp(
+    connectivity: Connectivity(),
+  ));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  final Connectivity connectivity;
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  AppRoutes appRoutes = AppRoutes();
+  const MyApp({
+    Key? key,
+    required this.connectivity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: appRoutes.generateRoutes,
-      initialRoute: '/',
+    AppRoutes appRoutes = AppRoutes();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => InternetCubit(
+            connectivity: connectivity,
+          ),
+        ),
+        BlocProvider(
+          create: (context) => CounterCubit(
+            internetCubit: BlocProvider.of<InternetCubit>(context),
+          ),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: appRoutes.generateRoutes,
+        initialRoute: '/',
+      ),
     );
-  }
-
-  @override
-  void dispose() {
-    appRoutes.dispose();
-    super.dispose();
   }
 }
