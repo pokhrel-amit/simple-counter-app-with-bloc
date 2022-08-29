@@ -9,14 +9,7 @@ import 'package:sm_bloc_cubit/presentation_layer/screens/second_screen.dart';
 import 'package:sm_bloc_cubit/presentation_layer/screens/third_screen.dart';
 
 class AppRoutes {
-
-  
-
-  final CounterCubit counterCubit = CounterCubit(
-    internetCubit: InternetCubit(
-      connectivity: Connectivity(),
-    ),
-  );
+  final CounterCubit counterCubit = CounterCubit();
   Route generateRoutes(RouteSettings settings) {
     // final GlobalKey<ScaffoldState>? key =
     //     settings.arguments as GlobalKey<ScaffoldState>;

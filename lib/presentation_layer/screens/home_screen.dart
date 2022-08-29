@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_bloc_cubit/Business_logic/cubit/counter_cubit.dart';
@@ -42,15 +44,18 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // FloatingActionButton(
-                  //   heroTag: 'h1',
-                  //   onPressed: () {
-                  //     BlocProvider.of<CounterCubit>(context).decrement();
-                  //   },
-                  //   child: const Icon(Icons.remove),
-                  // ),
                   const SizedBox(
                     width: 10,
+                  ),
+                  FloatingActionButton(
+                    mini: true,
+                    heroTag: 'h3',
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).decrement();
+                    },
+                    child: const Icon(
+                      Icons.remove,
+                    ),
                   ),
                   BlocConsumer<CounterCubit, CounterState>(
                     builder: (context, state) {
@@ -77,18 +82,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  // FloatingActionButton(
-                  //   heroTag: 'h2',
-                  //   onPressed: () {
-                  //     BlocProvider.of<CounterCubit>(context).increment();
-                  //   },
-                  //   child: const Icon(Icons.add),
-                  // ),
+                  FloatingActionButton(
+                    mini: true,
+                    heroTag: 'h4',
+                    onPressed: () {
+                      BlocProvider.of<CounterCubit>(context).increment();
+                    },
+                    child: const Icon(Icons.add),
+                  ),
                 ],
               ),
               const SizedBox(
                 height: 30,
               ),
+              Builder(
+                builder: (context) {
+                final internetState = context.watch<InternetCubit>().state;
+                final counterState = context.watch<CounterCubit>().state;
+
+                if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.Mobile) {
+                  return Text(
+                      'Counter:${counterState.counterValue.toString()} Connection: ${internetState.connectionType}');
+                } else if (internetState is InternetConnected &&
+                    internetState.connectionType == ConnectionType.Wifi) {
+                  return Text(
+                      'Counter:${counterState.counterValue.toString()} Connection: ${internetState.connectionType}');
+                } else {
+                  return Text('Disconnected');
+                }
+              }),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/second');
