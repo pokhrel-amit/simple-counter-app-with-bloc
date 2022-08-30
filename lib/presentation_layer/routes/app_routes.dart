@@ -1,6 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sm_bloc_cubit/Business_logic/cubit/counter_cubit.dart';
+import 'package:sm_bloc_cubit/Business_logic/cubit/internet_cubit.dart';
+import 'package:sm_bloc_cubit/main.dart';
 import 'package:sm_bloc_cubit/presentation_layer/screens/home_screen.dart';
 import 'package:sm_bloc_cubit/presentation_layer/screens/second_screen.dart';
 import 'package:sm_bloc_cubit/presentation_layer/screens/third_screen.dart';
